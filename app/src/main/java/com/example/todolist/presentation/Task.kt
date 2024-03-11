@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.todolist.R
 import com.example.todolist.domain.models.TaskModel
 
+
 @Composable
 fun Task(task: TaskModel, modifier: Modifier = Modifier){
     Row (
@@ -28,5 +29,5 @@ fun Task(task: TaskModel, modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun TaskPreview() {
-    Task(task = TaskModel(id = 0, text = "0", title = "0", color =  0xFFD0BCFF))
+    Task(task = TaskModel(id = 0, text = "0", title = "0", color = 0xFFD0BCFF))
 }

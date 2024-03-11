@@ -2,12 +2,12 @@ package com.example.todolist.data.storage
 
 import android.content.Context
 import android.util.Log
-import com.example.todolist.domain.models.TaskModel
+
 private const val SHARED_PREFS_NAME = "shared_prefs_name"
 private const val KEY_TITLE = "first_title"
 private const val KEY_TEXT = "first_text"
 private const val KEY_COLOR = "0xFFD0BCFF"
-class TaskStorageImpl(private val context: Context) : TaskStorage{
+class TaskStorageImpl(private val context: Context) : TaskStorage {
     private val sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
     override fun getAllTasks(): List<TaskEntity> {
         return  listOf(
