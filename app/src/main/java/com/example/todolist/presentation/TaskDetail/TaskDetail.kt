@@ -19,8 +19,11 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,7 +70,8 @@ fun TaskDetail(
         ){
             Text(modifier = Modifier
                 .padding(all = 7.dp)
-                .align(Alignment.CenterVertically),
+                .align(Alignment.CenterVertically)
+                .background(color = Color(task.color)),
                 text = task.title)
 
         }
@@ -76,30 +80,7 @@ fun TaskDetail(
     }
 
 }
-@Composable
-fun Detail(
-    task: TaskModel_,
-    modifier: Modifier = Modifier){
-    Card (
-        modifier = modifier.padding(start = 0.dp, top = 2.dp, end = 0.dp, bottom = 0.dp),
-        elevation = CardDefaults.cardElevation(5.dp)
-    ){
-        Row (
-            modifier = Modifier
-                .fillMaxSize()
-                .height(60.dp)
-                .clip(RoundedCornerShape(DimenTaskClip))
-                .background(color = Color(task.color))
-        ){
 
-            Text(modifier = Modifier
-                .padding(all = 7.dp)
-                .align(Alignment.Top),
-                text = task.text)
-        }
-    }
-
-}
 @Composable
 fun TxtField(
     task: TaskModel_,
@@ -107,27 +88,20 @@ fun TxtField(
     // we are creating a variable for
     // getting a value of our text field.
     val inputvalue = remember { mutableStateOf(TextFieldValue()) }
-    Column(
-        // we are using column to align our
-        // imageview to center of the screen.
+    TextField(
+        value = task.text,
+        onValueChange = {},
+        // placeholder = { Text(text = "Enter user name") }
         modifier = Modifier
             .fillMaxSize()
-            .height(60.dp)
-            .clip(RoundedCornerShape(DimenTaskClip))
             .background(color = Color(task.color)),
+        colors = TextFieldDefaults.colors(
+            // TODO Рофла ради
+            focusedContainerColor = MaterialTheme.colorScheme.primary,
+            unfocusedContainerColor = Color(task.color),
+        ),
 
-        // below line is used for specifying
-        // vertical arrangement.
-        verticalArrangement = Arrangement.Top,
-
-        // below line is used for specifying
-        // horizontal arrangement.
-        horizontalAlignment = Alignment.Start,
-    )
-    {
-        TextField(
-            value = "",
-            onValueChange = {} )
+        )
        /* TextField(
             // below line is used to get
             // value of text field,
@@ -207,7 +181,7 @@ fun TxtField(
                 Icon(Icons.Filled.Info, tint = colorResource(id = R.color.purple_200))
             },
         )*/
-    }
+
 }
 
 @Preview(showBackground = true)
@@ -217,6 +191,31 @@ fun TaskPreview() {
         text = stringResource(id = R.string.sample_text),
         title = "Тестовый тайтл",
         color = 0xFFD0BCFF))
+}
+@Composable
+fun Detail(
+    task: TaskModel_,
+    modifier: Modifier = Modifier){
+    Card (
+        modifier = modifier.padding(start = 0.dp, top = 2.dp, end = 0.dp, bottom = 0.dp),
+        elevation = CardDefaults.cardElevation(5.dp)
+    ){
+        Row (
+            modifier = Modifier
+                .fillMaxSize()
+                .height(60.dp)
+                .clip(RoundedCornerShape(DimenTaskClip))
+                .background(color = Color(task.color))
+        ){
+
+            Text(modifier = Modifier
+                .padding(all = 7.dp)
+                .align(Alignment.Top)
+                .background(color = Color(task.color)),
+                text = task.text)
+        }
+    }
+
 }
 
 //TODO Дизайн получше
