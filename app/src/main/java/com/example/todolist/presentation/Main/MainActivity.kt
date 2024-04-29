@@ -53,6 +53,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+
 import androidx.room.Room
 
 import com.example.todolist.R
@@ -82,6 +87,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TODOListTheme {
                 Log.e("!", "Activity created")
+                val navController = rememberNavController()
                 //https://developer.android.com/codelabs/basic-android-kotlin-compose-viewmodel-and-state#4
 /*                vm = ViewModelProvider(this,
                     MainViewModelFactory(this)
@@ -91,6 +97,12 @@ class MainActivity : ComponentActivity() {
                // vm.send(MainEvent.GetTasksEvent())
                 //vm.getTasks_()
                 val state by vm.state.collectAsState()
+                NavHost(navController = navController, startDestination = "firstScreen"){
+                    composable(route = "firstScreen"){
+                        TasksScreen(state = state)
+                    }
+                }
+
                 TasksScreen(state = state)
                // val tasks by vm.tasks_.collectAsState()
                 //Main(tasks = tasks)

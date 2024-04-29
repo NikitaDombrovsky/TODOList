@@ -32,6 +32,7 @@ import com.example.todolist.R
 import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Search
 import com.example.todolist.presentation.Task
+import com.example.todolist.presentation.TaskDetail.TaskDetail
 
 
 @Composable
@@ -89,7 +90,10 @@ fun Main(
             BottomBar()
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { presses++ }) {
+            FloatingActionButton(onClick = {
+                presses++
+              //  TaskDetail(task = tasks)
+            }) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
             }
         }
