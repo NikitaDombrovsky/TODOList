@@ -64,7 +64,7 @@ import com.example.todolist.R
 import com.example.todolist.data.storage.TaskDatabase
 import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Search
-import com.example.todolist.presentation.Task
+import com.example.todolist.presentation.TaskDetail.TaskDetail
 import com.example.todolist.presentation.ui.theme.TODOListTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -97,13 +97,20 @@ class MainActivity : ComponentActivity() {
                // vm.send(MainEvent.GetTasksEvent())
                 //vm.getTasks_()
                 val state by vm.state.collectAsState()
-                NavHost(navController = navController, startDestination = "firstScreen"){
-                    composable(route = "firstScreen"){
-                        TasksScreen(state = state)
+                NavHost(navController = navController, startDestination = "mainActivity"){
+                    composable(route = "mainActivity"){
+                        TasksScreen(state = state, onTestClick = {
+                            navController.navigate("taskDetails")
+
+                        })
+                       // Main(tasks = state.tasksList)
+                    }
+                    composable(route = "taskDetails"){
+                        TaskDetail(task = TaskModel_(0,stringResource(id = R.string.sample_text), "",0)) //TODO Убрать
                     }
                 }
 
-                TasksScreen(state = state)
+                //TasksScreen(state = state)
                // val tasks by vm.tasks_.collectAsState()
                 //Main(tasks = tasks)
                 // getTasks(tasks = getTasksUseCase())
@@ -162,13 +169,20 @@ fun BottomBar(){
 @Composable
 fun TODOPreview() {
     val testList: List<TaskModel_> = listOf(
-        TaskModel_(0, "0", "0", 0xFFD0BCFF),
-        TaskModel_(0, "0", "1", 0x1),
+        TaskModel_(2, "0", "0", 0xFFD0BCFF),
         TaskModel_(0, "0", "2", 0x1),
-        TaskModel_(0, "0", "3", 0x1),
-        TaskModel_(0, "0", "4", 0x1)
-    )
-    Main(tasks = testList)
+        TaskModel_(1, "0", "1", 0xFFD0BCFF),
+        TaskModel_(3, "0", "3", 0x1),
+        TaskModel_(4, "0", "4", 0x1)
+    ).sortedBy {
+        // TODO Для разных режимов сортировки
+        it.title
+    }/*.groupBy {
+        it.title.first()
+    }.toSortedMap()*/
+    Main(tasks = testList, onTestClick = {
+
+    })
 
 }
 

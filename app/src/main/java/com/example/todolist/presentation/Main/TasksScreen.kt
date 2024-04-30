@@ -1,6 +1,8 @@
 package com.example.todolist.presentation.Main
 
+import android.telecom.Call.Details
 import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -30,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.todolist.R
 import com.example.todolist.domain.models.TaskModel_
+import com.example.todolist.presentation.Divider
 import com.example.todolist.presentation.Search
 import com.example.todolist.presentation.Task
 import com.example.todolist.presentation.TaskDetail.TaskDetail
@@ -38,6 +41,7 @@ import com.example.todolist.presentation.TaskDetail.TaskDetail
 @Composable
 fun TasksScreen(
     state: MainUIState,
+    onTestClick: () -> Unit //= {}
     //onEvent: (TaskEvent) -> Unit
 ) {
     when(state) {
@@ -48,7 +52,9 @@ fun TasksScreen(
             Loading()
         }
         is MainUIState.Tasks -> {
-            Main(tasks = state.tasksList)
+            Main(tasks = state.tasksList,
+                onTestClick = onTestClick
+            )
         }
     }
 }
@@ -64,12 +70,14 @@ fun showString(x: String): Unit { Log.e("!x", x) } //TODO Как с этим р�
 @Composable
 fun Main(
     tasks: List<TaskModel_>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTestClick: () -> Unit// = {}
 ) {
-    var presses by remember { mutableIntStateOf(0) }
+/*    var presses by remember { mutableIntStateOf(0) }
     var isSearchActive by rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val onQueryChange_ : String = ""
+    val onQueryChange_ : String = ""*/
+   // val  onTestClick: () -> Unit
 
     Scaffold(
         topBar = {
@@ -90,21 +98,41 @@ fun Main(
             BottomBar()
         },
         floatingActionButton = {
+            FloatingActionButton(onClick = onTestClick
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add")
+            }
+        }
+/*        floatingActionButton = {
             FloatingActionButton(onClick = {
                 presses++
               //  TaskDetail(task = tasks)
             }) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
             }
-        }
+        }*/
     ) { innerPadding ->
-        Body( tasks,innerPadding = innerPadding)
+        val namesList = tasks.map {
+            Category(
+                name = it.title,
+                items = tasks
+            )
+        }
+        Body( namesList,innerPadding = innerPadding, onTestClick = onTestClick)
+
     }
 }
+data class Category(
+    val name: String,
+    val items: List<TaskModel_>
+)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Body(
-    tasks: List<TaskModel_>,
-    innerPadding: PaddingValues
+    //tasks: List<TaskModel_>,
+    tasks: List<Category>,
+    innerPadding: PaddingValues,
+    onTestClick: () -> Unit
 ){
     Row(
         modifier = Modifier
@@ -116,15 +144,34 @@ fun Body(
 
         //color = MaterialTheme.colorScheme.background
     ) {
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(innerPadding),
         ) {
-            items(tasks) { task ->
-                Task(task = task, Modifier.fillParentMaxWidth())
+            tasks.forEach{ task ->
+                stickyHeader {
+                    Divider(task = task.name, Modifier.fillParentMaxWidth()
+                        // TODO Может быть криво
+                        .animateItemPlacement(),
+                        )
+                }
+            items(task.items) { task ->
+                Task(task = task, Modifier.fillParentMaxWidth()
+                    // TODO Может быть криво
+                    .animateItemPlacement(),
+                    onTestClick = onTestClick)
+            }
             }
         }
+
+/*            items(tasks) { task ->
+
+                Task(task = task, Modifier.fillParentMaxWidth()
+                    // TODO Может быть криво
+                    .animateItemPlacement(),
+                    onTestClick = onTestClick)
+            }*/
+
     }
 }
