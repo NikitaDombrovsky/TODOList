@@ -1,13 +1,24 @@
 package com.example.todolist.presentation
 
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Start
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.AnchoredDraggableState
+import androidx.compose.foundation.gestures.DraggableAnchors
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.anchoredDraggable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,6 +31,8 @@ import androidx.compose.material3.DismissState
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
@@ -29,21 +42,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.todolist.R
 import com.example.todolist.domain.models.TaskModel
 import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Main.Category
 import com.example.todolist.presentation.ui.theme.DimenTaskClip
+import kotlin.math.roundToInt
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,12 +72,13 @@ fun Task(
     onTestClick: () -> Unit
 ){
     var selectedIndex by remember{mutableStateOf(-1)}
-/*    val dismissState = rememberDismissState(confirmStateChange = {
-        if (it == DismissValue.DismissedToEnd) {
 
-        }
-        true
-    })*/
+    /*    val dismissState = rememberDismissState(confirmStateChange = {
+            if (it == DismissValue.DismissedToEnd) {
+
+            }
+            true
+        })*/
     Card (
         modifier = modifier
             .pointerInput(Unit) {
@@ -123,6 +142,52 @@ fun Divider(
     }
 
 }
+/*enum class DragAnchors {
+    Start,
+    End,
+    Half,
+}*/
+/*@Composable
+fun TestView() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background,
+    ) {
+        Box {
+            HorizontalDraggableSample(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 80.dp)
+            )
+            *//*            VerticalDraggableSample(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .align(Alignment.Center)
+            )*//*
+        }
+    }
+}*/
+
+/*    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .paint(
+                painter = painterResource(R.drawable.met_silk_kashan_carpet),
+                contentScale = ContentScale.FillWidth
+            ),
+
+        //color = MaterialTheme.colorScheme.background
+    ) {
+        HorizontalDraggableSample()
+    }*/
+
+
+
+/*@Preview(showBackground = true)
+@Composable
+fun AnchoredDraggableBoxPr() {
+    HorizontalDraggableSample(modifier = Modifier)
+}*/
 @Preview(showBackground = true)
 @Composable
 fun TaskPreview() {
@@ -179,54 +244,3 @@ fun DismissBackground(dismissState: DismissState) {
         )
     }
 }
-//TODO Дизайн получше
-/*@Composable
-fun GameLayout(modifier: Modifier = Modifier) {
-    val mediumPadding = dimensionResource(R.dimen.padding_medium)
-    Card(
-        modifier = modifier,
-        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(mediumPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(mediumPadding)
-        ) {
-            Text(
-                modifier = Modifier
-                    .clip(shapes.medium)
-                    .background(colorScheme.surfaceTint)
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
-                    .align(alignment = Alignment.End),
-                text = stringResource(R.string.word_count, 0),
-                style = typography.titleMedium,
-                color = colorScheme.onPrimary
-            )
-            Text(
-                text = "scrambleun",
-                style = typography.displayMedium
-            )
-            Text(
-                text = stringResource(R.string.instructions),
-                textAlign = TextAlign.Center,
-                style = typography.titleMedium
-            )
-            OutlinedTextField(
-                value = "",
-                singleLine = true,
-                shape = shapes.large,
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.textFieldColors(containerColor = colorScheme.surface),
-                onValueChange = { },
-                label = { Text(stringResource(R.string.enter_your_word)) },
-                isError = false,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = { }
-                )
-            )
-        }
-    }
-}*/

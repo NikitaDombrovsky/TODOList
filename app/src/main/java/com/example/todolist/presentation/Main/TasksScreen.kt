@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
@@ -19,6 +20,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -30,12 +32,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.example.todolist.R
 import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Divider
 import com.example.todolist.presentation.Search
+import com.example.todolist.presentation.SwipeTask
 import com.example.todolist.presentation.Task
 import com.example.todolist.presentation.TaskDetail.TaskDetail
+import org.koin.androidx.viewmodel.scope.emptyState
 
 
 @Composable
@@ -112,13 +117,14 @@ fun Main(
             }
         }*/
     ) { innerPadding ->
+        Body_Switch( tasks,innerPadding = innerPadding, onTestClick = onTestClick)
         val namesList = tasks.map {
             Category(
                 name = it.title,
                 items = tasks
             )
         }
-        Body( namesList,innerPadding = innerPadding, onTestClick = onTestClick)
+       // Body( namesList,innerPadding = innerPadding, onTestClick = onTestClick)
 
     }
 }
@@ -126,7 +132,7 @@ data class Category(
     val name: String,
     val items: List<TaskModel_>
 )
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun Body(
     //tasks: List<TaskModel_>,
@@ -151,15 +157,19 @@ fun Body(
         ) {
             tasks.forEach{ task ->
                 stickyHeader {
-                    Divider(task = task.name, Modifier.fillParentMaxWidth()
-                        // TODO Может быть криво
-                        .animateItemPlacement(),
+                    Divider(task = task.name,
+                        Modifier
+                            .fillParentMaxWidth()
+                            // TODO Может быть криво
+                            .animateItemPlacement(),
                         )
                 }
             items(task.items) { task ->
-                Task(task = task, Modifier.fillParentMaxWidth()
-                    // TODO Может быть криво
-                    .animateItemPlacement(),
+                Task(task = task,
+                    Modifier
+                        .fillParentMaxWidth()
+                        // TODO Может быть криво
+                        .animateItemPlacement(),
                     onTestClick = onTestClick)
             }
             }
@@ -173,5 +183,45 @@ fun Body(
                     onTestClick = onTestClick)
             }*/
 
+    }
+}
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@Composable
+fun Body_Switch(
+    tasks: List<TaskModel_>,
+    innerPadding: PaddingValues,
+    onTestClick: () -> Unit
+){
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .paint(
+                painter = painterResource(R.drawable.met_silk_kashan_carpet),
+                contentScale = ContentScale.FillWidth
+            ),
+    ) {
+
+        LazyColumn(
+            //TODO Какой state?
+            state= rememberLazyListState(),
+            contentPadding = PaddingValues(10.dp),
+            //
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(innerPadding),
+        ) {
+            // TODO Настрал
+            items(tasks) { task ->
+                val state = rememberDismissState(
+                    confirmValueChange = {
+/*                        if (it == DismissValue.DismissedToStart){
+                            list.remove(item)
+                        }*/
+                        true
+                    }
+                )
+                SwipeTask(state, task = task, onTestClick = onTestClick)
+            }
+        }
     }
 }

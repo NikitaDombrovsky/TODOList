@@ -53,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -65,7 +66,9 @@ import com.example.todolist.data.storage.TaskDatabase
 import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Search
 import com.example.todolist.presentation.TaskDetail.TaskDetail
+import com.example.todolist.presentation.TestView
 import com.example.todolist.presentation.ui.theme.TODOListTheme
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -106,7 +109,30 @@ class MainActivity : ComponentActivity() {
                        // Main(tasks = state.tasksList)
                     }
                     composable(route = "taskDetails"){
-                        TaskDetail(task = TaskModel_(0,stringResource(id = R.string.sample_text), "",0)) //TODO Убрать
+                        TaskDetail(task = TaskModel_(0,
+                            stringResource(id = R.string.sample_text),
+                            "",0),
+                            onMoreVertClick = {
+                                navController.navigate("testView")
+                            }
+                        ) //TODO Убрать
+                    }
+                    composable(route = "testView"){
+                        //TODO Тестово
+                        val testList: List<TaskModel_> = listOf(
+                            TaskModel_(2, "0", "0", 0xFFD0BCFF),
+                            TaskModel_(0, "0", "2", 0x1),
+                            TaskModel_(1, "0", "1", 0xFFD0BCFF),
+                            TaskModel_(3, "0", "3", 0x1),
+                            TaskModel_(4, "0", "4", 0x1)
+                        ).sortedBy {
+                            // TODO Для разных режимов сортировки
+                            it.title
+                        }
+                        TestView(tasks = testList,
+                            onTestClick = {
+                                navController.navigate("taskDetails")
+                            })
                     }
                 }
 
@@ -122,7 +148,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+/*@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
     onQueryChange: (String) -> Unit,
@@ -145,7 +171,7 @@ fun TopBar(
 
         }
     )
-}
+}*/
 
 @Composable
 fun BottomBar(){

@@ -51,10 +51,12 @@ import com.example.todolist.presentation.ui.theme.DimenTaskClip
 @Composable
 fun TaskDetail(
     task: TaskModel_,
-    modifier: Modifier = Modifier){
+    modifier: Modifier = Modifier,
+    onMoreVertClick: () -> Unit
+){
     Scaffold(
         topBar = {
-            TopBar(task = task)
+            TopBar(task = task, onMoreVertClick = onMoreVertClick)
         },
     ) { innerPadding ->
         BodyDetails(task = task, Modifier.padding(innerPadding)
@@ -69,7 +71,8 @@ fun TaskDetail(
 @Composable
 fun TopBar(
     task: TaskModel_,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onMoreVertClick: () -> Unit
 )
 {
     TopAppBar(
@@ -110,7 +113,7 @@ fun TopBar(
                         )
 
                     )
-                    IconButton(onClick = { /* todo dialog */ },
+                    IconButton(onClick = onMoreVertClick,
                         modifier = Modifier.align(Alignment.CenterVertically)) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
@@ -224,7 +227,8 @@ fun TaskPreview1() {
     TaskDetail(task = TaskModel_(id = 0,
         text = stringResource(id = R.string.sample_text),
         title = "Тестовый тайтл",
-        color = 0xFFD0BCFF))
+        color = 0xFFD0BCFF),
+        onMoreVertClick = {})
 }
 @Preview(showBackground = true)
 @Composable
@@ -232,6 +236,6 @@ fun TaskPreviewEmpty() {
     TaskDetail(task = TaskModel_(id = 0,
         text = "",
         title = "",
-        color = 0))
+        color = 0), onMoreVertClick = {})
 }
 
