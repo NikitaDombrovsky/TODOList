@@ -1,25 +1,34 @@
 package com.example.todolist.domain.models
 
-import java.time.LocalDateTime
-import java.util.Date
 
-class TaskModel_ (
+class TaskFinalModel (
     val id: Int,
     val text: String,
     val title: String,
-    val color: Long,
-    //val dateOfChange: Date
+    val deadline: Int,
+    val changeAt: Int,
+    val checkedStatus: Boolean,
+    val categoryId: Int,
+    val deadlineStatus: DeadlineStatus
+    //
+    // TODO "Просрочено такого-то числа"
 ){
 
 }
 
-/*
-data class Category(val idCategory: Int, val name: String, val color: Long, val iconPath: String){
+enum class DeadlineStatus{
+    Overdue,
+    Current
+}
 
-} //TODO подумать
+/*
+}
+//TODO подумать
 data class TaskPreviewModel(val id: Int, val title: String, val color: Long){
 
 }*/
+/*
+TODO А как это вообще ложится в систему?
 data class TaskView_(
     val id: Int,
     val title: String,
@@ -34,4 +43,4 @@ data class TaskView_(
 
 fun TaskView_.Companion.fromModel(taskModel: TaskModel_): TaskView_ {
     return TaskView_(taskModel.id, taskModel.title, taskModel.color)
-}
+}*/

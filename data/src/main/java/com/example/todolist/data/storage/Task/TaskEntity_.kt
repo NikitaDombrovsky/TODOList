@@ -29,4 +29,3 @@ fun TaskEntity_.Companion.fromModel(taskModel: TaskModel_): TaskEntity_ {
     return TaskEntity_(taskModel.id, taskModel.text, taskModel.title, taskModel.color)
 }
 
-// TODO ну типо дедлайн, статус (создана, в процессе, выполнена), категория, тема и тп ,favorite

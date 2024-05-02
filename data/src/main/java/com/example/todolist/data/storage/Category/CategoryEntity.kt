@@ -1,16 +1,18 @@
 package com.example.todolist.data.storage.Category
 
 import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
+@Entity(tableName = "Category"
+)
 class CategoryEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val Id: Int = 0,
     @ColumnInfo(name="nameOfCategory")
-    val name: String,
-    @ColumnInfo(name="title")
-    val title: String,
+    val nameOfCategory: String,
     @ColumnInfo(name="colorOfCategory")
-    val color: Long,
+    val colorOfCategory: Long,
     @ColumnInfo(name="textColorOfCategory")
     val textColor: Long,
     @ColumnInfo(name="secondColorOfCategory")

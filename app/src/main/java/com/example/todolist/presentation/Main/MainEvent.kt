@@ -1,7 +1,7 @@
 package com.example.todolist.presentation.Main
 
-import com.example.roomkt.Contact
-import com.example.roomkt.SortType
+/*import com.example.roomkt.Contact
+import com.example.roomkt.SortType*/
 import com.example.todolist.data.storage.Task.TaskEntity_
 import com.example.todolist.domain.models.TaskModel
 import java.time.LocalDateTime
