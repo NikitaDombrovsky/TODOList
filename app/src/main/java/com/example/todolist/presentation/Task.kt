@@ -60,6 +60,7 @@ import com.example.todolist.R
 import com.example.todolist.domain.models.TaskModel
 import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Main.Category
+import com.example.todolist.presentation.Main.TaskView_
 import com.example.todolist.presentation.ui.theme.DimenTaskClip
 import kotlin.math.roundToInt
 
@@ -67,7 +68,8 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Task(
-    task: TaskModel_,
+    //task: TaskModel_,
+    task: TaskView_,
     modifier: Modifier = Modifier,
     onTestClick: () -> Unit
 ){
@@ -191,13 +193,13 @@ fun AnchoredDraggableBoxPr() {
 @Preview(showBackground = true)
 @Composable
 fun TaskPreview() {
-    Task(task = TaskModel_(id = 0,
+/*    Task(task = TaskModel_(id = 0,
         text = "0",
         title = "Тестовый тайтл",
         color = 0xFFD0BCFF),
         onTestClick = {
 
-        })
+        })*/
 }
 @Preview(showBackground = true)
 @Composable

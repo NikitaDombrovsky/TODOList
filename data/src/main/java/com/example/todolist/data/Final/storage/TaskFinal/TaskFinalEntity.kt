@@ -1,11 +1,10 @@
-package com.example.todolist.data.storage.TaskFinal
+package com.example.todolist.data.Final.storage.TaskFinal
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.todolist.data.storage.Category.CategoryEntity
-import com.example.todolist.domain.models.TaskFinalModel
-import com.example.todolist.domain.models.TaskModel_
+import com.example.todolist.data.Final.storage.Categoty.CategoryEntity
+import com.example.todolist.domain.Final.models.TaskFinalModel
 
 @Entity(tableName = "Tasks",
     foreignKeys = [
@@ -32,10 +31,18 @@ data class TaskFinalEntity(
     @ColumnInfo(name="categoryId")
     val categoryId: Int,
 ){
-    companion object { }
+    companion object {
+        /* TODO Сделать
+
+                val empty = MovieDetailsEntity(
+            0, String.empty(), String.empty(), String.empty(),
+            String.empty(), String.empty(), 0, String.empty()
+        )
+        * */
+    }
 }
 fun TaskFinalEntity.toModel(): TaskFinalModel {
-    return TaskFinalModel(id, text, title, deadline, changeAt,checkedStatus, categoryId, deadlineStatus)
+    return TaskFinalModel(id, text, title, deadline, changeAt,checkedStatus, categoryId)
 }
 fun TaskFinalEntity.Companion.fromModel(taskModel: TaskFinalModel): TaskFinalEntity {
     return TaskFinalEntity(taskModel.id, taskModel.text, taskModel.title,

@@ -67,6 +67,7 @@ import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Search
 import com.example.todolist.presentation.TaskDetail.TaskDetail
 import com.example.todolist.presentation.TestView
+import com.example.todolist.presentation.getPreviewData
 import com.example.todolist.presentation.ui.theme.TODOListTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -118,7 +119,7 @@ class MainActivity : ComponentActivity() {
                         ) //TODO Убрать
                     }
                     composable(route = "testView"){
-                        //TODO Тестово
+/*                        //TODO Тестово
                         val testList: List<TaskModel_> = listOf(
                             TaskModel_(2, "0", "0", 0xFFD0BCFF),
                             TaskModel_(0, "0", "2", 0x1),
@@ -128,8 +129,8 @@ class MainActivity : ComponentActivity() {
                         ).sortedBy {
                             // TODO Для разных режимов сортировки
                             it.title
-                        }
-                        TestView(tasks = testList,
+                        }*/
+                        TestView(tasks = getPreviewData(),
                             onTestClick = {
                                 navController.navigate("taskDetails")
                             })
@@ -206,7 +207,7 @@ fun TODOPreview() {
     }/*.groupBy {
         it.title.first()
     }.toSortedMap()*/
-    Main(tasks = testList, onTestClick = {
+    Main(tasks = getPreviewData(), onTestClick = {
 
     })
 

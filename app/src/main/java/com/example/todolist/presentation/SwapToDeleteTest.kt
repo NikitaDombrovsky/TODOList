@@ -74,12 +74,14 @@ import com.example.todolist.domain.models.TaskModel
 import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Main.Category
 import com.example.todolist.presentation.Main.Main
+import com.example.todolist.presentation.Main.TaskView_
 import com.example.todolist.presentation.ui.theme.DimenTaskClip
 import kotlin.math.roundToInt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestView(
-    tasks: List<TaskModel_>,
+    //tasks: List<TaskModel_>,
+    tasks: List<TaskView_>,
     onTestClick: () -> Unit
 ) {
     Surface(
@@ -120,7 +122,8 @@ fun TestView(
 @Composable
 fun SwipeTask(
     state: DismissState,
-    task: TaskModel_,
+    //task: TaskModel_,
+    task: TaskView_,
     modifier: Modifier = Modifier,
     onTestClick: () -> Unit
 ){
@@ -199,12 +202,12 @@ fun SwipeItemBackground(
 @Preview(showBackground = true)
 @Composable
 fun SwapToDeleteTestPreview() {
-    val testList: List<TaskModel_> = listOf(
-        TaskModel_(2, "0", "0", 0xFFD0BCFF),
-        TaskModel_(0, "0", "2", 0x1),
-        TaskModel_(1, "0", "1", 0xFFD0BCFF),
-        TaskModel_(3, "0", "3", 0x1),
-        TaskModel_(4, "0", "4", 0x1)
+    val testList: List<TaskView_> = listOf(
+        TaskView_(2, "0", 0xFFD0BCFF),
+        TaskView_(0, "0",  0x1),
+        TaskView_(1, "0",  0xFFD0BCFF),
+        TaskView_(3, "0",  0x1),
+        TaskView_(4, "0",  0x1)
     ).sortedBy {
         // TODO Для разных режимов сортировки
         it.title

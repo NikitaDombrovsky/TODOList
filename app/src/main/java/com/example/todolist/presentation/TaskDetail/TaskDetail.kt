@@ -84,14 +84,15 @@ fun TopBar(
             Card (
                 modifier = modifier.padding(start = 0.dp, top = 20.dp,
                     end = 16.dp, bottom = 12.dp),
-                elevation = CardDefaults.cardElevation(5.dp)
+                elevation = CardDefaults.cardElevation(5.dp),
+               // shape = RoundedCornerShape(6.dp)
             ){
 
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp)
-                        .clip(RoundedCornerShape(DimenTaskClip))
+                        //.clip(RoundedCornerShape(DimenTaskClip))
                         .background(color = Color(task.color)),
                     horizontalArrangement = Arrangement.SpaceBetween
 

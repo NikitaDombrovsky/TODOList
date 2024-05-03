@@ -74,7 +74,8 @@ fun showString(x: String): Unit { Log.e("!x", x) } //TODO Как с этим р�
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Main(
-    tasks: List<TaskModel_>,
+    //tasks: List<TaskModel_>,
+    tasks: List<TaskView_>,
     modifier: Modifier = Modifier,
     onTestClick: () -> Unit// = {}
 ) {
@@ -130,7 +131,8 @@ fun Main(
 }
 data class Category(
     val name: String,
-    val items: List<TaskModel_>
+   // val items: List<TaskModel_>
+    val items: List<TaskView_>
 )
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -188,7 +190,8 @@ fun Body(
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun Body_Switch(
-    tasks: List<TaskModel_>,
+    //tasks: List<TaskModel_>,
+    tasks: List<TaskView_>,
     innerPadding: PaddingValues,
     onTestClick: () -> Unit
 ){

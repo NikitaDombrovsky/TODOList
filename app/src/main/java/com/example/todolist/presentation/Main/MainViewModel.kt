@@ -67,7 +67,20 @@ class MainViewModel(
 /*   fun getAllTasks(): List<MainState> =
        mutableTasks_.tryEmit(getTasksUseCase().map { taskModel -> taskModel })*/
     private fun getTasks(){
-        _state.tryEmit(MainUIState.Tasks(getTasksUseCase()))
+        val tasks = getTasksUseCase()
+
+        val tasksView =  tasks.map {tasks_ -> TaskView_(tasks_.id, tasks_.title, tasks_.color)}
+
+        _state.tryEmit(MainUIState.Tasks(tasksView))
+
+
+/*    _movieDetails.value = MovieDetailsView(
+        movie.id, movie.title, movie.poster,
+        movie.summary, movie.cast, movie.director, movie.year, movie.trailer
+    )*/
+
+
+
 /*        val test = getTasksUseCase()
         mutableTasks_.tryEmit(getTasksUseCase())
         mutableTasks_.tryEmit(listOf(
