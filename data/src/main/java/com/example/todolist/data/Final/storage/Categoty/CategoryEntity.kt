@@ -19,8 +19,8 @@ class CategoryEntity(
     val secondColor: Long,
     @ColumnInfo(name="thirdColorOfCategory")
     val thirdColor: Long,
-    @ColumnInfo(name="imageOfCategory")
-    val image: ByteArray? = null
+/*    @ColumnInfo(name="imageOfCategory")
+    val image: ByteArray? = null*/
 ) {
 
 }

@@ -1,8 +1,6 @@
 package com.example.todolist.presentation.Main
 
 
-import com.example.todolist.domain.models.TaskModel
-import com.example.todolist.domain.models.TaskModel_
 //import com.example.todolist.domain.models.TaskView_
 
 /*data class MainState (
@@ -16,7 +14,7 @@ sealed class MainUIState {
     data object Loading: MainUIState()
     data class Tasks(
        // val tasksList: List<TaskModel_> //TaskViewModel
-        val tasksList: List<TaskView_> //TaskViewModel
+        val tasksList: List<TaskViewFinal> //TaskViewModel
     ) : MainUIState()
     data object Empty: MainUIState()
     val sortType: SortType = SortType.DataOfChange

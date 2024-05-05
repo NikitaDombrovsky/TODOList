@@ -70,8 +70,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todolist.R
-import com.example.todolist.domain.models.TaskModel
-import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.Main.Category
 import com.example.todolist.presentation.Main.Main
 import com.example.todolist.presentation.Main.TaskView_

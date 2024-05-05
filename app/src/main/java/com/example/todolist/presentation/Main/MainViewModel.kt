@@ -2,16 +2,15 @@ package com.example.todolist.presentation.Main
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.todolist.data.storage.toModel
-import com.example.todolist.domain.models.TaskModel
-import com.example.todolist.domain.usecase.GetTasksUseCase_
-import com.example.todolist.domain.usecase.TasksUseCase.GetTasksUseCase
+import androidx.lifecycle.viewModelScope
+import com.example.todolist.domain.Final.usecase.TasksUseCase.GetTasksUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 
 class MainViewModel(
-    private val getTasksUseCase: GetTasksUseCase_
+    private val getTasksUseCase: GetTasksUseCase
 ): ViewModel() {
     private val _state : MutableStateFlow<MainUIState> = MutableStateFlow(MainUIState.Loading)
     val state = _state.asStateFlow()
@@ -66,10 +65,15 @@ class MainViewModel(
     }
 /*   fun getAllTasks(): List<MainState> =
        mutableTasks_.tryEmit(getTasksUseCase().map { taskModel -> taskModel })*/
-    private fun getTasks(){
-        val tasks = getTasksUseCase()
+    suspend private fun getTasks(){
+        //val tasks = getTasksUseCase()
+        viewModelScope.launch {
+            val tasksView =  getTasksUseCase().map {tasks -> TaskViewFinal(tasks.id,  tasks.title, tasks.deadline, tasks.
+                tasks.checkedStatus, tasks.categoryId)}
+        }
 
-        val tasksView =  tasks.map {tasks_ -> TaskView_(tasks_.id, tasks_.title, tasks_.color)}
+        //val tasksView =  tasks.map {tasks_ -> TaskViewFinal(tasks_.id, tasks_.title, tasks_.color)}
+
 
         _state.tryEmit(MainUIState.Tasks(tasksView))
 

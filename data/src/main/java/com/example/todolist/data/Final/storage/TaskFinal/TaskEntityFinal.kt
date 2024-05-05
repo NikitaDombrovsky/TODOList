@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.todolist.data.Final.storage.Categoty.CategoryEntity
-import com.example.todolist.domain.Final.models.TaskFinalModel
+import com.example.todolist.domain.Final.models.TaskModelFinal
 
 @Entity(tableName = "Tasks",
     foreignKeys = [
@@ -16,16 +16,16 @@ import com.example.todolist.domain.Final.models.TaskFinalModel
             onUpdate = ForeignKey.CASCADE
         )
     ])
-data class TaskFinalEntity(
+data class TaskEntityFinal(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name="text")
     val text: String,
     @ColumnInfo(name="title")
     val title: String,
-    @ColumnInfo(name="deathLine")
+    @ColumnInfo(name="deadline")
     val deadline: Int,
-    @ColumnInfo(name="changeAt")
-    val changeAt: Int,
+    @ColumnInfo(name="changedAt")
+    val changedAt: Int,
     @ColumnInfo(name="checkedStatus")
     val checkedStatus: Boolean,
     @ColumnInfo(name="categoryId")
@@ -41,12 +41,12 @@ data class TaskFinalEntity(
         * */
     }
 }
-fun TaskFinalEntity.toModel(): TaskFinalModel {
-    return TaskFinalModel(id, text, title, deadline, changeAt,checkedStatus, categoryId)
+/*fun TaskEntityFinal.toModel(): TaskModelFinal {
+    return TaskModelFinal(id, title, deadline, changedAt,checkedStatus, categoryId)
 }
-fun TaskFinalEntity.Companion.fromModel(taskModel: TaskFinalModel): TaskFinalEntity {
-    return TaskFinalEntity(taskModel.id, taskModel.text, taskModel.title,
+fun TaskEntityFinal.Companion.fromModel(taskModel: TaskModelFinal): TaskEntityFinal {
+    return TaskEntityFinal(taskModel.id, taskModel.text, taskModel.title,
         taskModel.deadline, taskModel.changeAt, taskModel.checkedStatus,
         taskModel.categoryId)
-}
+}*/
 

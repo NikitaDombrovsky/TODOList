@@ -2,7 +2,7 @@ package com.example.todolist.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.todolist.data.storage.TaskDatabase
+import com.example.todolist.data.Final.storage.TaskDatabase
 
 fun provideDatabase(context: Context) =
     Room.databaseBuilder(context, TaskDatabase::class.java, "task_database")
