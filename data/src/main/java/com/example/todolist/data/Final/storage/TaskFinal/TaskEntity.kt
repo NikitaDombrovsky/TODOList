@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.todolist.data.Final.storage.Categoty.CategoryEntity
-import com.example.todolist.domain.Final.models.TaskModelFinal
 
 @Entity(tableName = "Tasks",
     foreignKeys = [
@@ -15,8 +14,9 @@ import com.example.todolist.domain.Final.models.TaskModelFinal
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
-    ])
-data class TaskEntityFinal(
+    ]
+)
+data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name="text")
     val text: String,

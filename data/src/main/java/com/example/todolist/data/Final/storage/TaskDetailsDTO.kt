@@ -1,7 +1,6 @@
 package com.example.todolist.data.Final.storage
 
 import com.example.todolist.domain.Final.models.TaskDetailsModel
-import com.example.todolist.domain.Final.models.TaskModelFinal
 
 
 class TaskDetailsDTO(
@@ -20,9 +19,12 @@ class TaskDetailsDTO(
 ){
     companion object { }
 }
-fun TaskDetailsDTO.toModel(): TaskModelFinal {
+fun TaskDetailsDTO.toModel(): TaskDetailsModel {
     //return TaskGettingDTO(id, text, title, deadline, changedAt,checkedStatus, categoryId, nameOfCategory, colorOfCategory, textColor, secondColor, thirdColor)
-    return TaskModelFinal(id, text, deadline, changedAt,checkedStatus, categoryId)
+    //return TaskModelFinal(id, text, deadline, changedAt,checkedStatus, categoryId)
+    return TaskDetailsModel(id, text, title ,deadline,
+        changedAt, checkedStatus, categoryId, nameOfCategory,
+        textColor, textColor, secondColor, thirdColor)
 }
 fun TaskDetailsDTO.Companion.fromModel(taskModel: TaskDetailsModel): TaskDetailsDTO {
     return TaskDetailsDTO(taskModel.id, taskModel.text, taskModel.title ,taskModel.deadline,

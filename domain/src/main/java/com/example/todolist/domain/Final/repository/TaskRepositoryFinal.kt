@@ -1,10 +1,10 @@
 package com.example.todolist.domain.Final.repository
 
-import com.example.todolist.domain.Final.models.TaskModelFinal
+import com.example.todolist.domain.Final.models.TaskModel
 
 interface TaskRepositoryFinal {
-    suspend fun getAllTasks(): List<TaskModelFinal>
-    fun getTaskDetails(id : Int): TaskModelFinal
-    fun upsertTask(taskModel: TaskModelFinal)
+    suspend fun getAllTasks(): List<TaskModel>
+    fun getTaskDetails(id : Int): TaskModel
+    fun upsertTask(taskModel: TaskModel)
     //fun saveTask(taskModel: TaskModel_): Boolean
 }

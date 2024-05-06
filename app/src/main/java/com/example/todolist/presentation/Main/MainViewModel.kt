@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.domain.Final.usecase.TasksUseCase.GetTasksUseCase
+import com.example.todolist.presentation.TaskPreview.TaskPreviewView
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -15,20 +16,8 @@ class MainViewModel(
     private val _state : MutableStateFlow<MainUIState> = MutableStateFlow(MainUIState.Loading)
     val state = _state.asStateFlow()
 
-/*    private val mutableTasks = MutableStateFlow(listOf<TaskModel>())
-    val tasks = mutableTasks.asStateFlow()*/
-
-    //private val mutableTasks_ = MutableStateFlow(listOf<MainState>())
-    //val tasks_ = mutableTasks_.asStateFlow()
-
     init {
         Log.e("!", "VM created")
-/*        mutableTasks_.tryEmit(listOf(
-            MainState(
-                title = "Test",
-                color = 0xFFD0BCFF)
-        )
-        )*/
     }
 
     override fun onCleared() {
@@ -38,23 +27,18 @@ class MainViewModel(
 
     fun reduce(event: MainEvent){
         when(event){
-/*            is Save -> {
-                save(text = event.text)
-            }*/
-/*            is MainEvent.GetTasksEvent ->{
-                getTasks()
-            }*/
-
             MainEvent.ShowEmptyEvent -> {
                 _state.tryEmit(MainUIState.Empty)
 
             }
             MainEvent.ShowAllTasksEvent -> {
-                getTasks()
-
+                viewModelScope.launch {
+                    _state.tryEmit(MainUIState.Tasks(getTasks()))
+                    //getTasks()
+                }
             }
 
-            is MainEvent.DeleteTaskEvent -> TODO()
+            //is MainEvent.DeleteTaskEvent -> TODO()
             MainEvent.HideDialog -> TODO()
             is MainEvent.SetDateOfChangeEvent -> TODO()
             is MainEvent.SetTitleEvent -> TODO()
@@ -65,36 +49,20 @@ class MainViewModel(
     }
 /*   fun getAllTasks(): List<MainState> =
        mutableTasks_.tryEmit(getTasksUseCase().map { taskModel -> taskModel })*/
-    suspend private fun getTasks(){
-        //val tasks = getTasksUseCase()
-        viewModelScope.launch {
-            val tasksView =  getTasksUseCase().map {tasks -> TaskViewFinal(tasks.id,  tasks.title, tasks.deadline, tasks.
-                tasks.checkedStatus, tasks.categoryId)}
+    suspend private fun getTasks() =
+        getTasksUseCase().map {tasks -> TaskPreviewView(
+            id = tasks.id,
+            title = tasks.title,
+            deadline = tasks.deadline,
+            changedAt = tasks.changedAt,
+            checkedStatus = tasks.checkedStatus,
+            colorOfCategory = tasks.colorOfCategory)
         }
 
-        //val tasksView =  tasks.map {tasks_ -> TaskViewFinal(tasks_.id, tasks_.title, tasks_.color)}
+        //val tasks = getTasksUseCase()
 
 
-        _state.tryEmit(MainUIState.Tasks(tasksView))
+        //_state.tryEmit(MainUIState.Tasks(tasksView))
 
-
-/*    _movieDetails.value = MovieDetailsView(
-        movie.id, movie.title, movie.poster,
-        movie.summary, movie.cast, movie.director, movie.year, movie.trailer
-    )*/
-
-
-
-/*        val test = getTasksUseCase()
-        mutableTasks_.tryEmit(getTasksUseCase())
-        mutableTasks_.tryEmit(listOf(
-            MainState(
-                title = "Test",
-                color = 0xFFD0BCFF)))
-        mutableTasks.tryEmit(getTasksUseCase())*/
-
-
-        //mutableTasks.tryEmit(getTasksUseCase())
-        //taskStorage.getAllTasks().map { taskEntity -> taskEntity.toModel()}
     }
-}
+

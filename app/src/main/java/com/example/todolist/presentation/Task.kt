@@ -34,7 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.todolist.R
-import com.example.todolist.presentation.Main.TaskView_
+import com.example.todolist.presentation.TaskPreview.TaskPreviewView
 import com.example.todolist.presentation.ui.theme.DimenTaskClip
 
 
@@ -42,7 +42,7 @@ import com.example.todolist.presentation.ui.theme.DimenTaskClip
 @Composable
 fun Task(
     //task: TaskModel_,
-    task: TaskView_,
+    task: TaskPreviewView,
     modifier: Modifier = Modifier,
     onTestClick: () -> Unit
 ){
@@ -77,7 +77,7 @@ fun Task(
                 .fillMaxWidth()
                 .height(60.dp)
                 .clip(RoundedCornerShape(DimenTaskClip))
-                .background(color = Color(task.color))
+                .background(color = Color(task.colorOfCategory))
         ){
             Text(
                 text = task.title,

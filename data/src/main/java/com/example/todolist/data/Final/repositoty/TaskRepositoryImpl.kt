@@ -1,24 +1,20 @@
 package com.example.todolist.data.Final.repositoty
 
-import com.example.todolist.data.Final.storage.TaskFinal.TaskDaoFinal
-import com.example.todolist.data.Final.storage.TaskFinal.toModel
+import com.example.todolist.data.Final.storage.TaskFinal.TaskDao
 import com.example.todolist.data.Final.storage.toModel
-import com.example.todolist.domain.Final.models.TaskModelFinal
+import com.example.todolist.domain.Final.models.TaskModel
 import com.example.todolist.domain.Final.repository.TaskRepositoryFinal
-import com.example.todolist.domain.models.TaskModel_
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
-class TaskRepositoryImplFinal(private val taskStorage: TaskDaoFinal): TaskRepositoryFinal {
-    override suspend fun getAllTasks(): List<TaskModelFinal> {
+class TaskRepositoryImpl(private val taskStorage: TaskDao): TaskRepositoryFinal {
+    override suspend fun getAllTasks(): List<TaskModel> {
         return taskStorage.getAllTasks().map { taskGettingDTO -> taskGettingDTO.toModel() }
     }
 
-    override fun getTaskDetails(id: Int): TaskModelFinal {
+    override fun getTaskDetails(id: Int): TaskModel {
         TODO("Not yet implemented")
     }
 
-    override fun upsertTask(taskModel: TaskModelFinal) {
+    override fun upsertTask(taskModel: TaskModel) {
         TODO("Not yet implemented")
     }
 /*    override fun getAllTasks(): List<TaskModel_> =

@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -21,13 +20,11 @@ import androidx.navigation.compose.rememberNavController
 
 import androidx.room.Room
 
-import com.example.todolist.R
 import com.example.todolist.data.Final.storage.TaskDatabase
-import com.example.todolist.domain.Final.models.TaskModelFinal
-import com.example.todolist.domain.models.TaskModel_
 import com.example.todolist.presentation.TaskDetail.TaskDetail
 import com.example.todolist.presentation.TestView
-import com.example.todolist.presentation.getPreviewData
+import com.example.todolist.presentation.getDetailsData
+import com.example.todolist.presentation.getPreviewDatas
 import com.example.todolist.presentation.ui.theme.TODOListTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -52,13 +49,9 @@ class MainActivity : ComponentActivity() {
                 Log.e("!", "Activity created")
                 val navController = rememberNavController()
                 //https://developer.android.com/codelabs/basic-android-kotlin-compose-viewmodel-and-state#4
-/*                vm = ViewModelProvider(this,
-                    MainViewModelFactory(this)
-                )
-                    .get(MainViewModel::class.java)*/
+
                 vm.reduce(MainEvent.ShowAllTasksEvent)
-               // vm.send(MainEvent.GetTasksEvent())
-                //vm.getTasks_()
+
                 val state by vm.state.collectAsState()
                 NavHost(navController = navController, startDestination = "mainActivity"){
                     composable(route = "mainActivity"){
@@ -66,20 +59,16 @@ class MainActivity : ComponentActivity() {
                             navController.navigate("taskDetails")
 
                         })
-                       // Main(tasks = state.tasksList)
                     }
                     composable(route = "taskDetails"){
-                        TaskDetail(task = TaskModelFinal(0,)/*TaskModel_(0,
-                            stringResource(id = R.string.sample_text),
-                            "",0)*/
-                            ,
+                        TaskDetail(task = getDetailsData(),
                             onMoreVertClick = {
                                 navController.navigate("testView")
                             }
                         ) //TODO Убрать
                     }
                     composable(route = "testView"){
-                        TestView(tasks = getPreviewData(),
+                        TestView(tasks = getPreviewDatas(),
                             onTestClick = {
                                 navController.navigate("taskDetails")
                             })
@@ -144,7 +133,7 @@ fun BottomBar(){
 @Preview(showBackground = true)
 @Composable
 fun TODOPreview() {
-    Main(tasks = getPreviewData(), onTestClick = {
+    Main(tasks = getPreviewDatas(), onTestClick = {
 
     })
 

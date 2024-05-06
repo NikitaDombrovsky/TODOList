@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -30,27 +29,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.todolist.R
-import com.example.todolist.domain.models.TaskModel_
-import com.example.todolist.presentation.ui.theme.DimenTaskClip
+import com.example.todolist.presentation.getDetailsData
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskDetail(
-    task: TaskModel_,
+    task: TaskDetailsView,
     modifier: Modifier = Modifier,
     onMoreVertClick: () -> Unit
 ){
@@ -59,9 +53,11 @@ fun TaskDetail(
             TopBar(task = task, onMoreVertClick = onMoreVertClick)
         },
     ) { innerPadding ->
-        BodyDetails(task = task, Modifier.padding(innerPadding)
-            //TODO Color3
-            .background(color =  Color(task.color))
+        BodyDetails(task = task,
+            Modifier
+                .padding(innerPadding)
+                //TODO Color3
+                .background(color = Color(task.colorOfCategory))
         )
     }
 
@@ -70,7 +66,7 @@ fun TaskDetail(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
-    task: TaskModel_,
+    task: TaskDetailsView,
     modifier: Modifier = Modifier,
     onMoreVertClick: () -> Unit
 )
@@ -78,7 +74,7 @@ fun TopBar(
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             //TODO Color3
-            containerColor = Color(task.color)
+            containerColor = Color(task.thirdColor)
         ),
         title = {
             Card (
@@ -93,14 +89,14 @@ fun TopBar(
                         .fillMaxWidth()
                         .height(60.dp)
                         //.clip(RoundedCornerShape(DimenTaskClip))
-                        .background(color = Color(task.color)),
+                        .background(color = Color(task.colorOfCategory)),
                     horizontalArrangement = Arrangement.SpaceBetween
 
                 ){
                     Text(modifier = Modifier
                         .padding(all = 15.dp)
                         .align(Alignment.CenterVertically)
-                        .background(color = Color(task.color)),
+                        .background(color = Color(task.textColor)),
                         text = if (task.title != "")
                         {
                             task.title
@@ -128,7 +124,7 @@ fun TopBar(
 }
 @Composable
 fun BodyDetails(
-    task: TaskModel_,
+    task: TaskDetailsView,
     modifier: Modifier = Modifier
 ){
     Card (
@@ -141,48 +137,8 @@ fun BodyDetails(
     }
 }
 @Composable
-fun BodyDetailsOld(
-    task: TaskModel_,
-    modifier: Modifier = Modifier
-){
-    Card (
-        modifier = modifier.padding(start = 16.dp, top = 2.dp, end = 16.dp, bottom = 12.dp),
-        elevation = CardDefaults.cardElevation(5.dp)
-    ){
-
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-                //.padding(innerPadding)
-                .height(60.dp)
-                .clip(RoundedCornerShape(DimenTaskClip))
-                .background(color = Color(task.color))
-        ){
-            Text(modifier = Modifier
-                .padding(all = 15.dp)
-                .align(Alignment.CenterVertically)
-                .background(color = Color(task.color)),
-                text = if (task.title != "")
-                {
-                    task.title
-                } else {
-                    "Text"
-                },
-                style = TextStyle(
-                    color = Color.Black,
-                    fontSize = 24.sp,
-                    fontFamily = FontFamily.SansSerif
-                )
-
-            )
-        }
-        TxtField(task = task)
-    }
-}
-
-@Composable
 fun TxtField(
-    task: TaskModel_,
+    task: TaskDetailsView,
     modifier: Modifier = Modifier) {
     // TODO ДЕЛАЙ
     val message = remember{mutableStateOf(task.text)}
@@ -195,12 +151,13 @@ fun TxtField(
         placeholder = { Text(text = "Text") },
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(task.color))
+            .background(color = Color(task.colorOfCategory))
             .verticalScroll(rememberScrollState()),
         colors = TextFieldDefaults.colors(
             // TODO если цвета поедут
             //focusedContainerColor = colorScheme.primary,
-            unfocusedContainerColor = Color(task.color),
+            // TODO Какой цвет?
+            unfocusedContainerColor = Color(task.colorOfCategory),
 
         ),
         keyboardOptions = KeyboardOptions(
@@ -225,18 +182,28 @@ fun TxtField(
 @Preview(showBackground = true)
 @Composable
 fun TaskPreview1() {
-    TaskDetail(task = TaskModel_(id = 0,
+    TaskDetail(task = getDetailsData()) {
+
+    }
+/*    TaskDetail(task = TaskModel_(id = 0,
         text = stringResource(id = R.string.sample_text),
         title = "Тестовый тайтл",
         color = 0xFFD0BCFF),
-        onMoreVertClick = {})
+        onMoreVertClick = {})*/
 }
+/*
 @Preview(showBackground = true)
 @Composable
 fun TaskPreviewEmpty() {
-    TaskDetail(task = TaskModel_(id = 0,
+    TaskDetail(task = getDetailsData()) {
+
+    }
+*/
+/*    TaskDetail(task = TaskModel_(id = 0,
         text = "",
         title = "",
-        color = 0), onMoreVertClick = {})
+        color = 0), onMoreVertClick = {})*//*
+
 }
+*/
 
