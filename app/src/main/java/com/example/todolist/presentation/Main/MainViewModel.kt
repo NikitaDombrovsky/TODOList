@@ -27,24 +27,32 @@ class MainViewModel(
 
     fun reduce(event: MainEvent){
         when(event){
-            MainEvent.ShowEmptyEvent -> {
+            MainEvent.ShowEmpty -> {
                 _state.tryEmit(MainUIState.Empty)
 
             }
-            MainEvent.ShowAllTasksEvent -> {
+/*            MainEvent.ShowAllTasks -> {
                 viewModelScope.launch {
                     _state.tryEmit(MainUIState.Tasks(getTasks()))
                     //getTasks()
                 }
-            }
+            }*/
+            is MainEvent.ShowAllTasks -> {
+                viewModelScope.launch {
+                    _state.tryEmit(MainUIState.Tasks(getTasks()))
+                    //getTasks()
+                }
 
+            }
             //is MainEvent.DeleteTaskEvent -> TODO()
             MainEvent.HideDialog -> TODO()
-            is MainEvent.SetDateOfChangeEvent -> TODO()
-            is MainEvent.SetTitleEvent -> TODO()
+            is MainEvent.SetDateOfChange -> TODO()
+            is MainEvent.SetTitle -> TODO()
             MainEvent.ShowDialog -> TODO()
             is MainEvent.SortTask -> TODO()
-            MainEvent.UpsertTaskEvent -> TODO()
+            MainEvent.UpsertTask -> TODO()
+            MainEvent.Loading -> TODO()
+
         }
     }
 /*   fun getAllTasks(): List<MainState> =
@@ -65,4 +73,6 @@ class MainViewModel(
         //_state.tryEmit(MainUIState.Tasks(tasksView))
 
     }
+
+
 

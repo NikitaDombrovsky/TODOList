@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unexpected_error">Unexpected Error</string>
+    <string name="ok">OK</string>
+    <string name="connection_error">Connection Error</string>
+    <string name="no_data_error">No Data</string>
+</resources>

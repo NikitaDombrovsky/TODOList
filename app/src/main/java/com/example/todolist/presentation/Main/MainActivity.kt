@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 //https://developer.android.com/codelabs/basic-android-kotlin-compose-viewmodel-and-state#4
 
-                vm.reduce(MainEvent.ShowAllTasksEvent)
+                vm.reduce(MainEvent.ShowAllTasks)
 
                 val state by vm.state.collectAsState()
                 NavHost(navController = navController, startDestination = "mainActivity"){
@@ -85,6 +85,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 
 /*@OptIn(ExperimentalMaterial3Api::class)
